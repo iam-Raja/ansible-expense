@@ -18,9 +18,9 @@
 
   - name: connection check & setup mysql cred
     community.mysql.mysql_info:
-      login_user: {{ useranme }}
+      login_user: {{ username }}
       login_password: {{  password }}
-      host: {{ host }}
+      login_host: {{ host }}
       filter: version
       ignore_errors: True
       register: mysqlsetupresult
