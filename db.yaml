@@ -1,0 +1,27 @@
+- name: install and configuring mysql
+  hosts: db
+  become: yes
+  tasks:
+  - name: install mysql
+    dnf:
+      name: mysql server
+      state: latest
+  - name: start mysql
+    service:
+      name: mysqld
+      state: started
+      enabled: yes   
+
+  - name: connection check & setup mysql cred
+    community.mysql.mysql_info:
+      login_user: root
+      login_password: ExpenseApp@1
+      filter: version
+      ignore_errors: True
+      register: mysqlsetupresult
+  - name: display error result
+    debug:
+      msg: "errors while setup of mysql {{mysqlsetupresult}}"       
+
+
+
