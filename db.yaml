@@ -22,8 +22,8 @@
       login_password: "{{ password }}"
       login_host: "{{ host }}"
       filter: version
-      ignore_errors: True
-      register: mysqlsetupresult
+    ignore_errors: yes
+    register: mysqlsetupresult
 
   - name: display error result
     debug:
