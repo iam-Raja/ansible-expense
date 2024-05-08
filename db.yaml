@@ -19,7 +19,7 @@
   - name: connection check & setup mysql cred
     community.mysql.mysql_info:
       login_user: root
-      login_password: {{  password }}
+      login_password: {{ password }}
       login_host: {{ host }}
       filter: version
       ignore_errors: True
