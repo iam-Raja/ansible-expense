@@ -1,1 +1,13 @@
 - name: configuring backend
+  hosts: localhost
+  become: yes
+  tasks:
+  - name: install nginx
+    dnf:
+       name: nginx
+       state: latest
+  - name: start and enable
+    service:
+    name: nginx
+    state: started
+    enabled: yes       
