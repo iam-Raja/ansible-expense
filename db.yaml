@@ -1,10 +1,14 @@
 - name: install and configuring mysql
   hosts: localhost
   become: yes
+  vars:
+    username: root
+    password: ExpenseApp@1
+    host: 54.196.140.32
   tasks:
   - name: install mysql
     dnf:
-      name: mysql server
+      name: mysql-server
       state: latest
   - name: start mysql
     service:
@@ -14,11 +18,13 @@
 
   - name: connection check & setup mysql cred
     community.mysql.mysql_info:
-      login_user: root
-      login_password: ExpenseApp@1
+      login_user: {{ useranme }}
+      login_password: {{  password }}
+      host: {{ host }}
       filter: version
       ignore_errors: True
       register: mysqlsetupresult
+
   - name: display error result
     debug:
       msg: "errors while setup of mysql {{mysqlsetupresult}}"       
