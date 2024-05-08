@@ -2,9 +2,11 @@
   hosts: localhost
   become: yes
   vars:
-    #username: root
-    password: ExpenseApp@1
+    username: root
     host: 54.196.140.32
+  vars_prompt:
+    name: password
+    prompt: enter mysql password
   tasks:
   - name: install mysql
     dnf:
@@ -33,7 +35,11 @@
 
   - name: display error result
     debug:
-      msg: "errors while setup of mysql {{mysqlsetupresult}}"       
+      msg: "errors while setup of mysql {{mysqlsetupresult}}"  
+
+  - name: setting settimg mysqlpwd via cmd
+    command: "mysql_secure_installation --set-root-pass {{ password }}"
+    when: mysqlsetupresult.failed is true # don't give {{ }} in when condition
 
 
 
