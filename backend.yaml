@@ -43,8 +43,8 @@
       remote_src: yes
   - name: downloading dependicies & change dir(with 'args' keyword)
     ansible.builtin.command: npm install
-     args:
-       chdir: /app
+    args:
+      chdir: /app
 
   - name: Copy file with owner and permissions
     ansible.builtin.copy:
