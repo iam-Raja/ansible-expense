@@ -3,7 +3,7 @@
   become: yes
   vars:
     username: root
-    host: 54.166.150.74
+    host: 34.235.171.146
   vars_prompt:
     name: password
     prompt: enter mysql password
