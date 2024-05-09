@@ -16,7 +16,7 @@
     
   - name: install nodejs
     dnf:
-      name: {{ item }}
+      name: "{{ item }}"
       state: installed
       loop:
       - nodejs
