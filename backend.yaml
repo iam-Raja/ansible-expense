@@ -1,7 +1,7 @@
 - name: configuring backend
   hosts: localhost
   become: yes
-    vars:
+  vars:
     username: root
     host: 54.89.69.133
   vars_prompt:
