@@ -70,3 +70,10 @@
   - name: demon-reload
     ansible.builtin.systemd_service:
       daemon_reload: true
+  - name: start&enable backend
+    service:
+      name: mysqld
+      state: started
+      enabled: yes
+
+
