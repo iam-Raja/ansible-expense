@@ -5,11 +5,38 @@
   - name: install nginx
     dnf:
      name: nginx
-     state: installed
+     state: installed #latest or installed both are same
 
   - name: start & enable nginx
     service:
       name: nginx
       state: started
       enabled: yes
-      
+
+  - name: Remove file (delete file)
+    ansible.builtin.file:
+      path: /usr/share/nginx/html/*
+      state: absent
+
+  - name: Download frontend code
+    ansible.builtin.get_url:
+      url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
+      dest: /tmp/frontend.zip
+
+  - name: Unsipping a file that is already on the remote machine
+    ansible.builtin.unarchive:
+      src: /tmp/frontend.zip
+      dest: /usr/share/nginx/html
+      remote_src: yes
+
+ - name: Copy a expenxe.conf file on the remote machine
+   ansible.builtin.copy:
+    src: expense.conf
+    dest: /etc/nginx/default.d/expense.conf
+
+  - name: Restart frontend service 
+    ansible.builtin.service:
+     name: frontend
+     state: restarted
+
+    
