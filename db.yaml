@@ -1,5 +1,5 @@
 - name: install and configuring mysql
-  hosts: localhost
+  hosts: db
   become: yes
   vars:
     username: root
