@@ -72,7 +72,7 @@
       daemon_reload: true
   - name: start&enable backend
     service:
-      name: mysqld
+      name: nodejs
       state: started
       enabled: yes
 
