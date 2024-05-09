@@ -1,6 +1,13 @@
 - name: configuring backend
   hosts: localhost
   become: yes
+    vars:
+    username: root
+    host: 54.89.69.133
+  vars_prompt:
+    name: password
+    prompt: enter mysql password
+    private: no
   tasks:
   - name: disable nodejs
     ansible.builtin.command: dnf module disable nodejs -y
@@ -20,3 +27,36 @@
     ansible.builtin.file:
       name: /app   
       state: directory
+
+  - name: Download backed code
+    ansible.builtin.get_url:
+      url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+      dest: /tmp/backend.zip
+
+  - name: Unarchive 0r unzip
+    ansible.builtin.unarchive:
+      src: /tmp/backend.zip
+      dest: /app
+      remote_src: yes
+  - name: downloading dependicies & change dir(with 'args' keyword)
+    ansible.builtin.command: npm install
+     args:
+       chdir: /app
+
+  - name: Copy file with owner and permissions
+    ansible.builtin.copy:
+     src: backend.service
+     dest: /etc/systemd/system/backend.service
+
+  - name: install mysql dependcies
+    ansible.builtin.pip:
+       name:
+       - PyMySQL
+       - cryptography
+       executable: pip3.9  # pip3.11 if python version is 3.11
+
+  - name: connection check & setup mysql cred
+    community.mysql.mysql_db:
+      login_user: root
+      login_password: "{{ password }}"
+      login_host: "{{ host }}"     
