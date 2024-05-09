@@ -1,5 +1,5 @@
 - name: configuring backend
-  hosts: localhost
+  hosts: backend
   become: yes
   vars:
     username: root
