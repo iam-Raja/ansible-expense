@@ -1,0 +1,15 @@
+- name: configuring frontend
+  hosts: localhost
+  become: yes
+  tasks:
+  - name: install nginx
+    dnf:
+     name: nginx
+     state: installed
+
+  - name: start & enable nginx
+    service:
+      name: nginx
+      state: started
+      enabled: yes
+      
