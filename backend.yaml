@@ -2,12 +2,16 @@
   hosts: localhost
   become: yes
   tasks:
-  - name: install nginx
+  - name: disable nodejs
+    ansible.builtin.command: dnf module disable nodejs -y
+  - name: enable nodejs
+    ansible.builtin.command: dnf module enable nodejs:20 -y
+    
+  - name: install nodejs
     dnf:
-       name: nginx
-       state: latest
-  - name: start and enable
-    service:
-      name: nginx
-      state: started
-      enabled: yes       
+      name: nodejs
+      state: installed
+
+  - name: create user expense
+    ansible.builtin.user:  
+     name: expense
