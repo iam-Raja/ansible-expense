@@ -34,9 +34,9 @@
       src: expense.conf
       dest: /etc/nginx/default.d/expense.conf
 
-  - name: Restart frontend service 
+  - name: Restart expense service 
     ansible.builtin.service:
-     name: frontend
+     name: expense
      state: restarted
 
     
